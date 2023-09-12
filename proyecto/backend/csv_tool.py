@@ -12,7 +12,7 @@ IP_NAS_RE = re.compile(r"((?:192\.168\.247\.[0-9]{2})|(?:192\.168\.1\.20))$")
 ID_RE = re.compile(r"\d{6,7}$")
 ID_SESION_RE = re.compile(r"/[A-F0-9]{8}-[A-F0-9]{8}$")
 ID_CONEXION_UNICA_RE = re.compile(r"/[a-f0-9]{16}$")
-USER_RE = re.compile(r"[a-zA-Z0-9-_\\/]{1,25}$")
+USER_RE = re.compile(r"[a-zA-Z0-9.-]{3,25}$")
 DATE_RE = re.compile(r"(20(1[5-9]|2[0-5])[-/](0[1-9]|1[0-2])[-/]([0-2]\d|3[0-1])$)")
 HOUR_RE = re.compile(r"([01]\d|2[0-3]):([0-5]\d):([0-5]\d)$")
 
