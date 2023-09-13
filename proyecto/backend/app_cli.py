@@ -1,5 +1,3 @@
-#PURO CHICHE  
-#AL AGREGAR LOS NUEVOS REGEX TENDRIA Q ANDAR TOD BIEN
 import typer
 import inquirer
 from yaspin import yaspin

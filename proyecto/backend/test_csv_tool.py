@@ -1,13 +1,15 @@
 import unittest
 from parameterized import parameterized
 import re
-from csv_tool import MAC_AP_RE, MAC_CLIENT_RE, IP_NAS_RE, ID_RE, ID_SESION_RE, ID_CONEXION_UNICA_RE, USER_RE, DATE_RE, HOUR_RE
+from csv_tool import MAC_AP_RE, MAC_CLIENT_RE, IP_NAS_RE, ID_RE, ID_SESION_RE, ID_CONEXION_UNICO_RE, USER_RE, DATE_RE, HOUR_RE
 
 class TestRegex(unittest.TestCase):
 
     @parameterized.expand([
-        ("Valid MAC_AP", MAC_AP_RE, "00:1A:2B:3C:4D:5E:HCDD", True),
-        ("Invalid MAC_AP", MAC_AP_RE, "Invalid", False),
+        ("Valid MAC_AP", MAC_AP_RE, "00-1A-2B-3C-4D-5E:HCDD", True),
+        ("Valid MAC_AP", MAC_AP_RE, "DC-9F-DB-12-F3-EA:HCDD", True),
+        ("Invalid MAC_AP", MAC_AP_RE, "00:1A-2B-3C-4D-5E:HCDD", False),
+        ("Invalid MAC_AP", MAC_AP_RE, "00-1A-2B:3C-4D-5E:HCDD", False),        
     ])
     def test_regex_mac_ap(self, name, regex, input_str, expected_result):
         self.assertEqual(bool(re.fullmatch(regex, input_str)), expected_result)
@@ -34,22 +36,25 @@ class TestRegex(unittest.TestCase):
         self.assertEqual(bool(re.fullmatch(regex, input_str)), expected_result)
 
     @parameterized.expand([
-        ("Valid ID_SESION", ID_SESION_RE, "/ABCDEF12-ABCDEF12", True),
-        ("Invalid ID_SESION", ID_SESION_RE, "/Invalid", False),
+        ("Valid ID_SESION", ID_SESION_RE, "ABCDEF12-ABCDEF12", True),
+        ("Invalid ID_SESION", ID_SESION_RE, "Invalid", False),
     ])
     def test_regex_id_sesion(self, name, regex, input_str, expected_result):
         self.assertEqual(bool(re.fullmatch(regex, input_str)), expected_result)
 
     @parameterized.expand([
-        ("Valid ID_CONEXION_UNICA", ID_CONEXION_UNICA_RE, "/abcdef0123456789", True),
-        ("Invalid ID_CONEXION_UNICA", ID_CONEXION_UNICA_RE, "/Invalid", False),
+        ("Valid ID_CONEXION_UNICO", ID_CONEXION_UNICO_RE, "abcdef0123456789", True),
+        ("Invalid ID_CONEXION_UNICO", ID_CONEXION_UNICO_RE, "Invalid", False),
     ])
     def test_regex_id_conexion_unica(self, name, regex, input_str, expected_result):
         self.assertEqual(bool(re.fullmatch(regex, input_str)), expected_result)
 
     @parameterized.expand([
-        ("Valid USER", USER_RE, "user123", True),
-        ("Invalid USER", USER_RE, "Invalid-User", True),
+        ("Valid USER", USER_RE, "user", True),
+        ("Valid USER", USER_RE, "user-", True),
+        ("Valid USER", USER_RE, "user.", True),
+        ("Invalid USER", USER_RE, "Invalid123User", False),
+        ("Invalid USER", USER_RE, "Invalid@User", False),
         ("Invalid USER", USER_RE, "Invalid/User", False),
         ("Invalid USER", USER_RE, "Invalid_User", False),
     ])
