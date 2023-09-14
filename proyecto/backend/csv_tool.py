@@ -4,15 +4,15 @@ import re
 #ENTENDER PQ FUNCIONAN LAS REJEX(TODAS)
 
 # Expresiones regulares
-MAC_AP_RE = re.compile(r"([0-9A-Fa-f]{2}-){5}[0-9A-Fa-f]{2}:HCDD$")#OK
-MAC_CLIENT_RE = re.compile(r"([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$")#OK
-IP_NAS_RE = re.compile(r"((?:192\.168\.247\.[0-9]{2})|(?:192\.168\.1\.20))$")#OK
-ID_RE = re.compile(r"\d{6,7}$")#OK
-ID_SESION_RE = re.compile(r"[A-F0-9]{8}-[A-F0-9]{8}$")#OK
-ID_CONEXION_UNICO_RE = re.compile(r"[a-f0-9]{16}$")#OK
-USER_RE = re.compile(r"[a-zA-Z.-]{3,25}$")#OK
-DATE_RE = re.compile(r"(20(1[5-9]|2[0-5])[-/](0[1-9]|1[0-2])[-/]([0-2]\d|3[0-1])$)")#OK
-HOUR_RE = re.compile(r"([01]\d|2[0-3]):([0-5]\d):([0-5]\d)$")#OK
+MAC_AP_RE = re.compile(r"([0-9A-Fa-f]{2}-){5}[0-9A-Fa-f]{2}:HCDD$")
+MAC_CLIENT_RE = re.compile(r"([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$")
+IP_NAS_RE = re.compile(r"((?:192\.168\.247\.[0-9]{2})|(?:192\.168\.1\.20))$")
+ID_RE = re.compile(r"\d{6,7}$")
+ID_SESION_RE = re.compile(r"[A-F0-9]{8}-[A-F0-9]{8}$")
+ID_CONEXION_UNICO_RE = re.compile(r"[a-f0-9]{16}$")
+USER_RE = re.compile(r"[a-zA-Z.-]{3,25}$")
+DATE_RE = re.compile(r"(20(1[5-9]|2[0-5])[-/](0[1-9]|1[0-2])[-/]([0-2]\d|3[0-1])$)")
+HOUR_RE = re.compile(r"([01]\d|2[0-3]):([0-5]\d):([0-5]\d)$")
 
 
 #Crea un dataframe de pandas con los datos del csv

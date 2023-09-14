@@ -7,16 +7,13 @@ import pandas as pd
 
 
 def menu(csv_path: str = typer.Option(..., prompt="Ingrese la ruta del archivo csv")):
-
     INICIO_CONEXION_DIA = "Inicio_de_Conexión_Dia"
     FIN_CONEXION_DIA = "FIN_de_Conexión_Dia"
 
     with yaspin(text="Leyendo csv", color="yellow"):
         data = create_pandas(csv_path)
-
     with yaspin(text="Aplicando expresiones regulares", color="yellow"):
         data = apply_regex(data)
-
     ap_list = data["MAC_AP"].unique().tolist()#TRAE LOS AP, UNIQUE NO SE REPITE
 
     while True:
