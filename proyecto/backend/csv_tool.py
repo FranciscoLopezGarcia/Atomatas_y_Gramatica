@@ -1,10 +1,9 @@
 import pandas as pd
 import re
 
-#ENTENDER PQ FUNCIONAN LAS REJEX(TODAS)
 
 # Expresiones regulares
-MAC_AP_RE = re.compile(r"([0-9A-Fa-f]{2}-){5}[0-9A-Fa-f]{2}:HCDD$")
+# MAC_AP_RE = re.compile(r"([0-9A-Fa-f]{2}-){5}[0-9A-Fa-f]{2}:HCDD$")  ##HCDD es exclusiva las MAC_AP de este archivo, no seria generico
 MAC_CLIENT_RE = re.compile(r"([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$")
 IP_NAS_RE = re.compile(r"((?:192\.168\.247\.[0-9]{2})|(?:192\.168\.1\.20))$")
 ID_RE = re.compile(r"\d{6,7}$")
@@ -14,7 +13,6 @@ USER_RE = re.compile(r"[a-zA-Z.-]{3,25}$")
 DATE_RE = re.compile(r"(20(1[5-9]|2[0-5])[-/](0[1-9]|1[0-2])[-/]([0-2]\d|3[0-1])$)")
 HOUR_RE = re.compile(r"([01]\d|2[0-3]):([0-5]\d):([0-5]\d)$")
 
-
 #Crea un dataframe de pandas con los datos del csv
 def create_pandas(csv_path: str) -> pd.DataFrame:
     data = pd.read_csv(csv_path, low_memory=False)
@@ -23,7 +21,7 @@ def create_pandas(csv_path: str) -> pd.DataFrame:
 #Aplica todos los filtros
 def apply_regex(data: pd.DataFrame) -> pd.DataFrame:
     filtro = (
-        data["MAC_AP"].apply(lambda x: bool(re.fullmatch(MAC_AP_RE, str(x))))
+        data["MAC_AP"].apply(lambda x: bool(re.fullmatch(MAC_CLIENT_RE, str(x))))
         & data["MAC_Cliente"].apply(lambda x: bool(re.fullmatch(MAC_CLIENT_RE, str(x))))
         & data["IP_NAS_AP"].apply(lambda x: bool(re.fullmatch(IP_NAS_RE, str(x))))
         & data["ID"].apply(lambda x: bool(re.fullmatch(ID_RE, str(x))))

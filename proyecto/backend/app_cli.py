@@ -44,22 +44,16 @@ def menu(csv_path: str = typer.Option(..., prompt="Ingrese la ruta del archivo c
 
         data[INICIO_CONEXION_DIA] = pd.to_datetime(data[INICIO_CONEXION_DIA])
         data[FIN_CONEXION_DIA] = pd.to_datetime(data[FIN_CONEXION_DIA])
-#USAMOS DATETIME PARA PODER USAR EL BETWEEN
-#PANDAS MANEJA FECHA
+
         filtro = (
             (data["MAC_AP"] == ap) &
-            #REVISA QUE TODAS LAS MAC_AP ESTEN DENTRO DE ESAS FECHAS(BETWEEN O SI ES MAS GRANDE O MAS CHICA)
-            #DA REALEMENTE LA GENTE CONECTADA EN ESAS FECHAS, ANTES DABA TODOS LOS QUE SE CONECTARON EN ESAS FECHAS Y NO LOS QUE SEGUIAN CONECTADOS(NUNCA CERRARON SESION)
             (
                 (data[INICIO_CONEXION_DIA].between(fecha_i, fecha_f)) |
                 (data[FIN_CONEXION_DIA].between(fecha_i, fecha_f)) |
                 (data[INICIO_CONEXION_DIA] <= fecha_i) & (data[FIN_CONEXION_DIA] >= fecha_f)
             )
         )
-
-#LOCALIZA TODA LA INFO Q DEVUELVA TRUE CON EL FILTRO(ES EL FILTRO VERDADERO), DONDE SE APLICA
         data = data.loc[filtro]
-#DE TODOS LOS USUARIOS CONECTADOS EN EL FILTRO, LOS TRAE UNA VEZ(NO IMPORTA SI SE CONECTA MAS DE UNA FECHA) EN EL CSV DA TODA LA DATA, EN EL PRINT SOLO LOS NOMBRES
         users = data["Usuario"].unique()
 
         consulta = f'Usuarios conectados al AP {ap} entre {fecha_i} y {fecha_f}'
@@ -85,7 +79,7 @@ def menu(csv_path: str = typer.Option(..., prompt="Ingrese la ruta del archivo c
 
 def write_to_csv(data: pd.DataFrame, consulta: str):
     file_name = f'output_{consulta}.csv'
-    data.to_csv(file_name, index=False) #LA DATA ES DEL FILTRO NO LA DE USERS
+    data.to_csv(file_name, index=False)
 
 
 if __name__ == "__main__":
